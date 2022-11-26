@@ -81,5 +81,26 @@ python manage.py shell
 
 ```
 
+7. Create Views function, settings URLS path to load templates files
+```python
+#in project_name/urls.py
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',include('store.urls')),
+]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+#in app_name/urls.py
+urlpatterns = [
+    path('', index, name="index"),
+
+]
+
+#in app_name/views.py
+def index(request):
+    return render(request, 'store/index.html')
+
+```
 
 
