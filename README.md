@@ -159,7 +159,22 @@ Inheritance from child template
 
 ```
 
+- Create and choose Hash algorthm for password
+```bash
+#Install hash algorthm
+pip install bcrypt scrypt
+pip install django[argon2]
 
+#Insert this in project settings.py
+#PASSWORD HASH ALGORITHMS
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.ScryptPasswordHasher',
+]
+```
 
 
 
@@ -182,22 +197,6 @@ urlpatterns = [
 ]
 ############################
 href="{% url 'index' %}">Home
-
-- Create and choose Hash algorthm for password
-#Install hash algorthm
-pip install bcrypt scrypt
-pip install django[argon2]
-
-#Insert this in project settings.py
-#PASSWORD HASH ALGORITHMS
-PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.Argon2PasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-    'django.contrib.auth.hashers.ScryptPasswordHasher',
-]
-
 
 - Tạo Views với tham số nhận vào:
 
