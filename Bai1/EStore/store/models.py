@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from ckeditor_uploader.fields import RichTextUploadingField
-
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Category(models.Model):
@@ -61,3 +61,11 @@ class Brand(models.Model):
 
     def __str__(self):
         return self.name
+
+class UserProfileInfo(models.Model):
+    user = models.OneToOneField(User, on_delete=models.PROTECT)
+    portfolio = models.URLField(blank=True, null=True)
+    image = models.ImageField(blank=True, null=True, upload_to='store/users/', default = 'store/images/avatar.jpg')
+
+    def __str__(self):
+        return self.user.username

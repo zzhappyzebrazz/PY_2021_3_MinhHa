@@ -53,30 +53,29 @@
 
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
-                            <a href="product-list.html" class="nav-item nav-link">Products</a>
-                            <a href="product-detail.html" class="nav-item nav-link">Product Detail</a>
-                            <a href="cart.html" class="nav-item nav-link">Cart</a>
-                            <a href="checkout.html" class="nav-item nav-link">Checkout</a>
-                            <a href="my-account.html" class="nav-item nav-link">My Account</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More Pages</a>
-                                <div class="dropdown-menu">
-                                    <a href="wishlist.html" class="dropdown-item">Wishlist</a>
-                                    <a href="login.html" class="dropdown-item">Login & Register</a>
-                                    <a href="contact.html" class="dropdown-item">Contact Us</a>
-                                </div>
-                            </div>
+                            <a href="{% url 'store:index_2' %}" class="nav-item nav-link active">TRANG CHỦ</a>
+                            <a href="{% url 'store:subcategory' 0 %}" class="nav-item nav-link">SẢN PHẨM</a>
+                            <a href="{% url 'store:contact' %}" class="nav-item nav-link">LIÊN HỆ</a>
                         </div>
+
                         <div class="navbar-nav ml-auto">
+                            {% with user=request.session.s_user %}
+                            {% if user %}
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ user.fist_name }} {{ user.last_name }}</a>
                                 <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item">Login</a>
-                                    <a href="#" class="dropdown-item">Register</a>
+                                    <a href="{% url 'customer:my_account' %}" class="dropdown-item">Thông tin của tôi</a>
+                                    <a href="{% url 'customer:logout' %}" class="dropdown-item">Đăng xuất</a>
                                 </div>
                             </div>
+                            {% else %}
+                            <div class="nav-item dropdown">
+                                <a href="{% url 'customer:login' %}" class="nav-item nav-link active"><strong>Đăng nhập</strong></a>
+                            </div>
+                            {% endif %}
+                            {% endwith %}
                         </div>
+
                     </div>
                 </nav>
             </div>
@@ -89,24 +88,24 @@
                 <div class="row align-items-center">
                     <div class="col-md-3">
                         <div class="logo">
-                            <a href="index.html">
+                            <a href="{% url 'store:index_2' %}">
                                 <img src="{% static 'store/img/logo.png' %}" alt="Logo">
                             </a>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="search">
-                            <input type="text" placeholder="Search">
+                            <input type="text" placeholder="Tìm kiếm sản phẩm...">
                             <button><i class="fa fa-search"></i></button>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="user">
-                            <a href="wishlist.html" class="btn wishlist">
+                            <!-- <a href="wishlist.html" class="btn wishlist">
                                 <i class="fa fa-heart"></i>
                                 <span>(0)</span>
-                            </a>
-                            <a href="cart.html" class="btn cart">
+                            </a> -->
+                            <a href="{% url 'store:cart' %}" class="btn cart">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>(0)</span>
                             </a>
@@ -133,7 +132,7 @@
                             <div class="contact-info">
                                 <p><i class="fa fa-map-marker"></i>227 Nguyễn Văn Cừ, Quận 5</p>
                                 <p><i class="fa fa-envelope"></i>email@example.com</p>
-                                <p><i class="fa fa-phone"></i> lntri@csc.hcmus.edu.vn</p>
+                                <p><i class="fa fa-phone"></i>(028)38.351.056 - Ext: 179</p>
                             </div>
                         </div>
                     </div>
@@ -142,7 +141,7 @@
                         <div class="footer-widget">
                             <h2>Thông tin cửa hàng</h2>
                             <ul>
-                                <li><a href="#">Về chúng tôi</a></li>
+                                <li><a href="{% url 'store:contact' %}">Về chúng tôi</a></li>
                                 <li><a href="#">Chính sách & Điều khoản</a></li>
                                 <li><a href="#">Quy định bảo hành</a></li>
                             </ul>
@@ -165,11 +164,11 @@
                             <h2>Theo dõi chúng tôi</h2>
                             <div class="contact-info">
                                 <div class="social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                    <a href=""><i class="fab fa-youtube"></i></a>
+                                    <a href="https://www.twitter.com"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="https://www.linkedin.com"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+                                    <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
                                 </div>
                             </div>
                         </div>
