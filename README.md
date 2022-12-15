@@ -174,6 +174,8 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
     'django.contrib.auth.hashers.ScryptPasswordHasher',
 ]
+
+doc: https://docs.djangoproject.com/en/4.1/topics/auth/passwords/
 ```
 
 
