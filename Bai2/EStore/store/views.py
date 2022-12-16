@@ -108,20 +108,21 @@ def subcategory(request, pk):
     print(headline)
 
     page = request.GET.get('page', 1) # Trang bắt đầu
-    paginator = Paginator(products_list, 15)
+    paginator = Paginator(products_list, 15) #Số items trên 1 page
     try:
         products = paginator.page(page)
     except PageNotAnInteger:
         products = paginator.page(1)
     except EmptyPage:
-        products = paginator.page(paginator.num_pages)        
-        
+        products = paginator.page(paginator.num_pages)                 
+
     #Brands
     brands = Brand.objects.all()
     
     return render(request, 'store/product_list.html',{
-        'products' : products,
         'headline' : headline,
+        'products' : products,
+        'products_list' : products_list,
         'sub_category' : sub_category,
         'brands' : brands,
     })
@@ -136,6 +137,16 @@ def product_detail(request, pk):
     related_product = Product.objects.filter(subcategory_id=product.subcategory_id)
     # print(related_product)
     print(product_category)
+    
+    #Phân trang
+    page = request.GET.get('page', 1) # Trang bắt đầu
+    paginator = Paginator(related_product, 3) #Số items trên 1 page
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)   
     
     brands = Brand.objects.all()
     

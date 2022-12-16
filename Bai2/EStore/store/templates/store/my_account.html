@@ -20,20 +20,15 @@
             <div class="col-md-3">
                 <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
                     <a class="nav-link active" id="account-nav" data-toggle="pill" href="#account-tab" role="tab"><i class="fa fa-user"></i>Tài khoản của tôi</a>
-                    <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i class="fa fa-shopping-bag"></i>Đơn hàng</a>
+                    <a class="nav-link" href="{% url 'store:cart' %}" role="tab"><i class="fa fa-shopping-bag"></i>Đơn hàng</a>
                     <a class="nav-link" href="{% url 'customer:logout' %}"><i class="fa fa-sign-out-alt"></i>Đăng xuất</a>
                 </div>
             </div>
+
             <div class="col-md-9">
                 <div class="tab-content">
-                    {% comment %} <div class="tab-pane fade show active" id="dashboard-tab" role="tabpanel" aria-labelledby="dashboard-nav">
-                        <h4>Dashboard</h4>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In condimentum quam ac mi viverra dictum. In efficitur ipsum diam, at dignissim lorem tempor in. Vivamus tempor hendrerit finibus. Nulla tristique viverra nisl, sit amet bibendum ante suscipit non. Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam eros. Aliquam et sapien eget arcu rhoncus scelerisque.
-                        </p> 
-                    </div> {% endcomment %}
                     <div class="tab-pane fade show active" id="account-tab" role="tabpanel" aria-labelledby="account-nav" aria-selected="true">
-                        <h4>Account Details</h4>
+                        <h4>Hồ sơ của tôi</h4>
                         <div class="row">
                             <div class="col-md-6">
                                 <input class="form-control" type="text" placeholder="{{ user.first_name }}">
@@ -45,76 +40,35 @@
                                 <input class="form-control" type="text" placeholder="{{ user.phone }}">
                             </div>
                             <div class="col-md-6">
-                                <input class="form-control" type="text" placeholder="{{ user.email }}">
+                                <input class="form-control" type="text" placeholder="{{ user.email }}" disabled="">
                             </div>
                             <div class="col-md-12">
                                 <input class="form-control" type="text" placeholder="{{ user.address }}">
                             </div>
                             <div class="col-md-12">
-                                <button class="btn">Update Account</button>
+                                <button class="btn">Cập nhật</button>
                                 <br><br>
                             </div>
                         </div>
-                        <h4>Password change</h4>
+                        <h4>Đổi mật khẩu</h4>
                         <div class="row">
                             <div class="col-md-12">
-                                <input class="form-control" type="password" placeholder="Current Password">
+                                <input class="form-control" type="password" placeholder="Mật khẩu hiện tại">
                             </div>
                             <div class="col-md-6">
-                                <input class="form-control" type="text" placeholder="New Password">
+                                <input class="form-control" type="text" placeholder="Mật khẩu mới">
                             </div>
                             <div class="col-md-6">
-                                <input class="form-control" type="text" placeholder="Confirm Password">
+                                <input class="form-control" type="text" placeholder="Xác nhận mật khẩu">
                             </div>
                             <div class="col-md-12">
-                                <button class="btn">Save Changes</button>
+                                <button class="btn">Đổi mật khẩu</button>
                             </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Product</th>
-                                        <th>Date</th>
-                                        <th>Price</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Product Name</td>
-                                        <td>01 Jan 2020</td>
-                                        <td>$99</td>
-                                        <td>Approved</td>
-                                        <td><button class="btn">View</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Product Name</td>
-                                        <td>01 Jan 2020</td>
-                                        <td>$99</td>
-                                        <td>Approved</td>
-                                        <td><button class="btn">View</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Product Name</td>
-                                        <td>01 Jan 2020</td>
-                                        <td>$99</td>
-                                        <td>Approved</td>
-                                        <td><button class="btn">View</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
