@@ -62,8 +62,8 @@
                             {% with user=request.session.s_user %}
                             {% if user %}
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ user.fist_name }} {{ user.last_name }}</a>
-                                <div class="dropdown-menu">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{ user.fist_name }} {{ user.last_name }}</a>
+                                <div class="dropdown-menu dropdown-menu-right">
                                     <a href="{% url 'customer:my_account' %}" class="dropdown-item">Thông tin của tôi</a>
                                     <a href="{% url 'customer:logout' %}" class="dropdown-item">Đăng xuất</a>
                                 </div>

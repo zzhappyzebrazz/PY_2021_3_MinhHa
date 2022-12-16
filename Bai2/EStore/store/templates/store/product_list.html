@@ -1,0 +1,184 @@
+{% extends 'store/_Master.html' %}
+{% block title_tab %}Product list{% endblock %}
+{% load static %}
+{% load humanize %}
+{% block main_content %}
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'store:index_2'%}">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Tên danh mục ở đây</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Product List Start -->
+<div class="product-view">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="product-view-top">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <h4>{{ headline }}</h4>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="product-short">
+                                        <div class="form-group">
+                                            <input type="number" required="" pattern="[1-9][0-9]{4,}" name="from_price" step="10000" min="10000" class="form-control" value="" placeholder="Từ giá" style="border: 1px solid #353535; color: #353535;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="product-price-range">
+                                        <div class="form-group">
+                                            <input type="number" required="" pattern="[1-9][0-9]{4,}" name="to_price" step="10000" min="100000" class="form-control" value="" placeholder="Đến giá" style="border: 1px solid #353535; color: #353535;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="submit" class="btn">Lọc</button>
+                                    <input type="hidden" name="product_name" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% for product in products %}
+                    <div class="col-md-4">
+                        <div class="product-item">
+                            <div class="product-title" style="height: 110px">
+                                <a href="{% url 'store:product_detail' product.pk %}">{{ product }}</a>
+                            </div>
+                            <div class="product-image">
+                                <a href="{% url 'store:product_detail' product.pk %}">
+                                    <img src="{{ product.image.url }}" alt="Product Image">
+                                </a>
+                            </div>
+                            <div class="product-price">
+                                <h3>{{ product.price | floatformat:0 | intcomma }}<span>đ</span></h3>
+                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination Start -->
+                <div class="col-md-12">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            {% comment %} <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li> {% endcomment %}
+                            {% if products.has_other_pages %}
+                            {% if products.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ products.previous_page_number }}">Previous</a>
+                                </li>
+                            {% else %}
+                                <div class="disable"><span></span></div>
+                            {% endif %}
+    
+                            {% for i in products.paginator.page_range %}
+                                {% if products.number == i %}
+                                    {% comment %} <a href="?page={{ i }}" class="btn_pagging active">{{ i }}</a> {% endcomment %}
+                                    <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                {% else %}
+                                    {% comment %} <li class="?page={{ products.previous_page_number }}"><a class="page-link" href="#">{{ i }}</a></li> {% endcomment %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {% if products.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ products.next_page_number }}">Next</a>
+                                </li>
+                            {% else %}
+                                <div class="disable"><span></span></div>
+                            {% endif %}
+                            
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                <!-- Pagination Start -->
+            </div>
+
+            <!-- Side Bar Start -->
+            <div class="col-lg-3 sidebar">
+                <div class="sidebar-widget widget-slider">
+                    <div class="sidebar-widget category">
+                        <h2 class="title">Danh Mục Sản Phẩm</h2>
+                        <nav class="navbar bg-light">
+                            <ul class="navbar-nav">
+                                {% for subcategory in sub_category %}
+                                <li class="nav-item">
+                                    <a href="{% url 'store:subcategory' subcategory.id %}">
+                                        <i class="fa fa-angle-double-right"></i> {{ subcategory }}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                {% comment %} <div class="sidebar-widget widget-slider">
+                    <div class="sidebar-slider normal-slider slick-initialized slick-slider">
+                        <button class="slick-prev slick-arrow" aria-label="Previous" type="button" style="">Previous</button>
+                        <div class="slick-list draggable">
+                            <div class="slick-track" style="opacity: 1; width: 17460px; transform: translate3d(-900px, 0px, 0px);">
+                                <div class="product-item slick-slide slick-cloned" data-slick-index="95" id="" aria-hidden="true" tabindex="-1" style="width: 180px;">
+                                    {% for product in products %}
+                                    <div class="col-md-4">
+                                        <div class="product-item">
+                                            <div class="product-title" style="height: 110px">
+                                                <a href="{% url 'store:product_detail' product.pk %}">{{ product }}</a>
+                                            </div>
+                                            <div class="product-image">
+                                                <a href="{% url 'store:product_detail' product.pk %}">
+                                                    <img src="{{ product.image.url }}" alt="Product Image">
+                                                </a>
+                                            </div>
+                                            <div class="product-price">
+                                                <h3>{{ product.price | floatformat:0 | intcomma }}<span>đ</span></h3>
+                                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Mua ngay</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <button class="slick-next slick-arrow" aria-label="Next" type="button" style="">Next</button>
+                    </div>
+                </div> {% endcomment %}
+            </div>
+            <!-- Side Bar End -->
+        </div>
+    </div>
+</div>
+<!-- Product List End -->
+
+<!-- Brand Start -->
+<div class="brand">
+    <div class="container-fluid">
+        <div class="brand-slider">
+            {% for brand in brands %}
+            <div class="brand-item"><img src="{{ brand.image.url }}" alt="{{ brand.name }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Brand End -->
+
+{% endblock %}
