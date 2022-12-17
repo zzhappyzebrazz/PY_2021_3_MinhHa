@@ -4,72 +4,27 @@ from store.models import *
 from django.core.paginator import Paginator
 from store.forms import *
 
-#all products
-# all_products = Product.objects.all()
-# sub_category_1_list = [1, 2, 3, 4, 5]
-# sub_category_2_list = [6, 7, 8, 9, 10]
-
-# Create your views here.
-def index(request):
-    #Slider
-    sliders = Slider.objects.all()
-    print(sliders)
-
-    #Brands
-    brands = Brand.objects.all()
-    print(brands)
-
-
-    #Thiết bị gia đình
-    # sub_category_1 = [product for product in all_products if product.subcategory_id in sub_category_1_list]
-    sub_category_1 = SubCategory.objects.filter(category=1).values_list('id')
-    list_subcategory_1 = [sub_category_1[0] for sub_category_1 in sub_category_1]
-    product_subcategory_1 = Product.objects.filter(subcategory__in=list_subcategory_1).order_by('-public_day')[:20]
-    print(f'Số lượng sản phẩm trong Thiết bị gia đình {len(product_subcategory_1)}')
-
-    sub_category_2 = SubCategory.objects.filter(category=2).values_list('id')
-    list_subcategory_2 = [sub_category_2[0] for sub_category_2 in sub_category_2]
-    product_subcategory_2 = Product.objects.filter(subcategory__in=list_subcategory_2).order_by('-public_day')[:20]
-    print(f'Số lượng sản phẩm trong Thiết bị gia đình {len(product_subcategory_2)}')
-
-    #Đồ dùng nhà bếp
-    # sub_category_2 = [product for product in all_products if product.subcategory_id in sub_category_2_list]
-    # print(f'Số lượng sản phẩm trong Đồ dùng nhà bếp {len(sub_category_2)}')
-
-    return render(request, 'store/index.html',{
-        'product_subcategory_1' : product_subcategory_1,
-        'product_subcategory_2' : product_subcategory_2,
-        'sliders' : sliders,
-        'brands' : brands,
-    })
-
-
-
 # Create your views here.
 def index_2(request):
     #Slider
     sliders = Slider.objects.all()
     print(sliders)
-
     #Brands
+    global brands
     brands = Brand.objects.all()
     print(brands)
-
-
     #Thiết bị gia đình
-    # sub_category_1 = [product for product in all_products if product.subcategory_id in sub_category_1_list]
     sub_category_1 = SubCategory.objects.filter(category=1).values_list('id')
     list_subcategory_1 = [sub_category_1[0] for sub_category_1 in sub_category_1]
     product_subcategory_1 = Product.objects.filter(subcategory__in=list_subcategory_1).order_by('-public_day')[:20]
     print(f'Số lượng sản phẩm trong Thiết bị gia đình {len(product_subcategory_1)}')
-
+    
+    #Đồ dùng nhà bếp
     sub_category_2 = SubCategory.objects.filter(category=2).values_list('id')
     list_subcategory_2 = [sub_category_2[0] for sub_category_2 in sub_category_2]
     product_subcategory_2 = Product.objects.filter(subcategory__in=list_subcategory_2).order_by('-public_day')[:20]
     print(f'Số lượng sản phẩm trong Thiết bị gia đình {len(product_subcategory_2)}')
 
-    #Đồ dùng nhà bếp
-    # sub_category_2 = [product for product in all_products if product.subcategory_id in sub_category_2_list]
     
     dem = 0
     print('======================================')
@@ -93,6 +48,7 @@ def index_2(request):
     return response
 
 def subcategory(request, pk):
+    global sub_category
     sub_category = SubCategory.objects.order_by('name')
     headline = ''
     if pk == 0:
@@ -115,9 +71,6 @@ def subcategory(request, pk):
         products = paginator.page(1)
     except EmptyPage:
         products = paginator.page(paginator.num_pages)                 
-
-    #Brands
-    brands = Brand.objects.all()
     
     return render(request, 'store/product_list.html',{
         'headline' : headline,
@@ -128,8 +81,8 @@ def subcategory(request, pk):
     })
 
 def product_detail(request, pk):
+    
     product = Product.objects.get(pk=pk)
-    sub_category = SubCategory.objects.order_by('name')
     product_category = ''
     for category in sub_category:
         if category.id == product.subcategory_id:
@@ -138,18 +91,6 @@ def product_detail(request, pk):
     # print(related_product)
     print(product_category)
     
-    #Phân trang
-    page = request.GET.get('page', 1) # Trang bắt đầu
-    paginator = Paginator(related_product, 3) #Số items trên 1 page
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        products = paginator.page(1)
-    except EmptyPage:
-        products = paginator.page(paginator.num_pages)   
-    
-    brands = Brand.objects.all()
-    
     return render(request, 'store/product_detail.html', {
         'sub_category' : sub_category,
         'product_category' : product_category,
@@ -157,6 +98,9 @@ def product_detail(request, pk):
         'product' : product,
         'brands' : brands,
     })
+
+def search(request):
+    return render(request, 'store/product_list.html')
 
 def cart(request):
     return render(request, 'store/cart.html')

@@ -12,7 +12,7 @@ urlpatterns = [
     path('contact/', contact, name="contact"),
     path('product_detail/<int:pk>/', product_detail, name="product_detail"),
     path('subcategory/<int:pk>/', subcategory, name="subcategory"),
-    # path('wishlist/', wishlist, name="wishlist"),
+    path('search/', search, name="search"),
     path('', index_2, name="index_2"),
     path('auth_user', demo_auth_user, name="auth_user"),
 ]

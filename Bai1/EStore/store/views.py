@@ -138,16 +138,6 @@ def product_detail(request, pk):
     # print(related_product)
     print(product_category)
     
-    #Phân trang
-    page = request.GET.get('page', 1) # Trang bắt đầu
-    paginator = Paginator(related_product, 3) #Số items trên 1 page
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        products = paginator.page(1)
-    except EmptyPage:
-        products = paginator.page(paginator.num_pages)   
-    
     brands = Brand.objects.all()
     
     return render(request, 'store/product_detail.html', {
@@ -157,6 +147,9 @@ def product_detail(request, pk):
         'product' : product,
         'brands' : brands,
     })
+
+def search(request):
+    return render(request, 'store/product_list.html')
 
 def cart(request):
     return render(request, 'store/cart.html')

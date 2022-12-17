@@ -128,7 +128,7 @@
                     <div class="sidebar-slider normal-slider">
                         {% for product in products_list %}
                         <div class="product-item">
-                            <div class="product-title">
+                            <div class="product-title" style="height: 110px">
                                 <a href="{% url 'store:product_detail' product.pk %}">{{ product.name }}</a>
                             </div>
                             <div class="product-image">
