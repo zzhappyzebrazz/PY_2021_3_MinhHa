@@ -1,0 +1,93 @@
+{% extends 'store/_Master.html' %}
+{% load static %}
+{% block main_content %}
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'store:index_2' %}">Home</a></li>
+            <li class="breadcrumb-item active">Đăng nhập & Đăng ký</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Login Start -->
+<div class="login">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="register-form">
+                    <h1> Đăng ký</h1>
+                    {% if result_register %}
+                    {{ result_register | safe }}
+                    {% endif %}
+                    <div class="row">
+                    <form class="row" method="post">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            {{ form.first_name.label }}
+                            {{ form.first_name }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.last_name.label }}
+                            {{ form.last_name }}
+                        </div>
+                        <div class="col-md-12">
+                            {{ form.email.label }}
+                            {{ form.email }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.password.label }}
+                            {{ form.password }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.confirm_password.label }}
+                            {{ form.confirm_password }}
+                        </div>
+                        <div class="col-md-12">
+                            {{ form.phone.label }}
+                            {{ form.phone }}
+                        </div>
+                        <div class="col-md-12">
+                            {{ form.address.label }}
+                            {{ form.address }}
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn">Đăng ký</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <form method="post">
+                {% csrf_token %}
+                <div class="col-12">
+                    {{ result_login|safe }}
+                </div>
+                <div class="login-form">
+                    <h1> Đăng nhập </h1>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Email</label>
+                            <input class="form-control" type="text" placeholder="Email" name="login_email" autocomplete="on">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Mật khẩu</label>
+                            <input class="form-control" type="password" placeholder="Mật khẩu" name="login_password" autocomplete="on">
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn">Đăng nhập</button>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Login End -->
+
+{% endblock %}

@@ -279,3 +279,86 @@ content = RichTextUploadingField(blank=True, null=True)
 python manage.py makemigrations
 python manage.py migrate
 ```
+
+* Form in Django
+
+GET thường nên dùng khi tìm kiếm trên trang web
+```html
+    <form action="{% url 'store:search' %}" method="GET">
+        <input type="text" name="all_search" placeholder="Tìm kiếm sản phẩm..." value="{{ input_search }}">
+        <button><i class="fa fa-search"></i></button>
+    </form>
+```
+```python
+    if request.method == "GET":
+        if request.GET.get("all_search"):
+            input_search = request.GET.get("all_search")
+            print(input_search)
+```
+POST thường được dùng để tương tác với người dùng; đăng ký đăng nhập; sác thực;...
+```html
+    <form method="post">
+    {% csrf_token %}
+    <div class="col-12">
+        {{ result_login|safe }}
+    </div>
+    <div class="login-form">
+        <h1> Đăng nhập </h1>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Email</label>
+                <input class="form-control" type="text" placeholder="Email" name="login_email" autocomplete="on">
+            </div>
+            <div class="col-md-6">
+                <label>Mật khẩu</label>
+                <input class="form-control" type="password" placeholder="Mật khẩu" name="login_password" autocomplete="on">
+            </div>
+            <div class="col-md-12">
+                <button class="btn">Đăng nhập</button>
+            </div>
+        </div>
+    </div>
+    </form>
+```
+```python
+    if request.POST.get('login_email'):
+        login_email = request.POST.get('login_email')
+        login_password = request.POST.get('login_password')
+        query = Customer.objects.filter(email=login_email, password=hasher.encode(login_password, 'magic string'))
+        print(query)
+```
+
+Django có cách handle form riêng
+
+Tạo file forms.py trong app
+
+```python
+from django import forms
+
+class FormUserProfileInfo(forms.ModelForm):
+    portfolio = forms.URLField(label='Portfolio', widget=forms.TextInput(attrs={
+        'class': 'form-control',
+    }))
+    image = forms.ImageField(required="false", label='Image', widget=forms.FileInput(attrs={
+        'class': 'form-control-file',
+    }))
+    
+    class Meta:
+        model = UserProfileInfo
+        exclude = ['user']
+```
+
+Sau đó được gọi trong function views.py
+```python
+    form_profile = FormUserProfileInfo()
+
+    if request.POST.get('username'):
+        form_user = FormUser(data=request.POST)
+        form_user_profile = FormUserProfileInfo(data=request.POST)
+        if form_user.is_valid() and form_user_profile.is_valid():
+            if form_user.cleaned_data['password'] == form_user.cleaned_data['confirm_password']:
+                #User
+                user = form_user.save()
+                user.set_password(user.password)
+                user.save()
+```

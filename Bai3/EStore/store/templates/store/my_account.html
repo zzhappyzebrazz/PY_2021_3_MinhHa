@@ -1,0 +1,77 @@
+{% extends 'store/_Master.html' %}
+{% load static %}
+{% block main_content %}
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'store:index_2' %}">Trang chủ</a></li>
+            <li class="breadcrumb-item active"></a>Tài khoản của tôi</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- My Account Start -->
+<div class="my-account">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="account-nav" data-toggle="pill" href="#account-tab" role="tab"><i class="fa fa-user"></i>Tài khoản của tôi</a>
+                    <a class="nav-link" href="{% url 'store:cart' %}" role="tab"><i class="fa fa-shopping-bag"></i>Đơn hàng</a>
+                    <a class="nav-link" href="{% url 'customer:logout' %}"><i class="fa fa-sign-out-alt"></i>Đăng xuất</a>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="account-tab" role="tabpanel" aria-labelledby="account-nav" aria-selected="true">
+                        <h4>Hồ sơ của tôi</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" placeholder="{{ user.first_name }}">
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" placeholder="{{ user.last_name }}">
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" placeholder="{{ user.phone }}">
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" placeholder="{{ user.email }}" disabled="">
+                            </div>
+                            <div class="col-md-12">
+                                <input class="form-control" type="text" placeholder="{{ user.address }}">
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn">Cập nhật</button>
+                                <br><br>
+                            </div>
+                        </div>
+                        <h4>Đổi mật khẩu</h4>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input class="form-control" type="password" placeholder="Mật khẩu hiện tại">
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" placeholder="Mật khẩu mới">
+                            </div>
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" placeholder="Xác nhận mật khẩu">
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn">Đổi mật khẩu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- My Account End -->
+
+{% endblock %}
